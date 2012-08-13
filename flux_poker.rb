@@ -5,8 +5,8 @@ flux_proxy = DRbObject.new_with_uri('druby://localhost:30000')
 loop do
   if flux_proxy.closed?
   else
-    count = flux_proxy.exec!("qstat -n1 | grep egta-").split("\n")
-    puts "#{count} current jobs"
+    out = flux_proxy.exec!("qstat -n1 | grep egta-")
+    puts "#{ out ? out.split("\n").count : 0 } current job(s)"
   end
   sleep 59
 end
