@@ -52,3 +52,35 @@ I, [2012-09-11T14:39:34.236055 #41690]  INFO -- : Tue Sep 11 14:39:34 EDT 2012
 
 I, [2012-09-11T14:40:33.476174 #41690]  INFO -- : Tue Sep 11 14:40:33 EDT 2012
 
+I, [2012-09-11T14:47:40.802131 #42502]  INFO -- : Tue Sep 11 14:47:40 EDT 2012
+
+I, [2012-09-11T14:48:40.015762 #42502]  INFO -- : Tue Sep 11 14:48:40 EDT 2012
+
+I, [2012-09-11T14:48:46.656954 #42502]  INFO -- : Called with qstat -n1 | grep egta
+I, [2012-09-11T14:49:39.251414 #42502]  INFO -- : Tue Sep 11 14:49:39 EDT 2012
+
+I, [2012-09-11T14:50:04.877016 #42690]  INFO -- : Tue Sep 11 14:50:04 EDT 2012
+
+I, [2012-09-11T14:50:08.160228 #42690]  INFO -- : Called with qstat -n1 | grep egta
+I, [2012-09-11T14:50:17.807044 #42690]  INFO -- : Called with qstat -n1 | grep egta
+D, [2012-09-11T14:50:17.807206 #42690] DEBUG -- : Email already sent: false
+E, [2012-09-11T14:50:17.807286 #42690] ERROR -- : Asked to send email alert.
+F, [2012-09-11T14:50:17.808255 #42690] FATAL -- : undefined local variable or method `logger' for #<FluxProxy:0x007fa46af97c28>
+I, [2012-09-11T14:51:42.397231 #42796]  INFO -- : Tue Sep 11 14:51:42 EDT 2012
+
+I, [2012-09-11T14:51:49.789725 #42796]  INFO -- : Called with qstat -n1 | grep egta
+I, [2012-09-11T14:51:53.797042 #42796]  INFO -- : Called with qstat -n1 | grep egta
+D, [2012-09-11T14:51:53.797214 #42796] DEBUG -- : Email already sent: false
+E, [2012-09-11T14:51:53.797308 #42796] ERROR -- : Asked to send email alert.
+I, [2012-09-11T14:51:53.797416 #42796]  INFO -- : Sent email to bcassell@umich.edu
+I, [2012-09-11T14:51:55.744044 #42796]  INFO -- : Date: Tue, 11 Sep 2012 14:51:53 -0400
+From: pony@unknown
+To: bcassell@umich.edu
+Message-ID: <504f8849c58dc_a72c3fc4460075e0305e4@d-108-200.eecs.umich.edu.mail>
+Subject: SSH-Proxy failure
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Connection closed
