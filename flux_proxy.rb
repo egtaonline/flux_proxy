@@ -46,7 +46,7 @@ class FluxProxy
     begin
       @logger.info { "Asked to upload #{src} to #{destination} with #{options}" }
       return email_alert("Connection closed") if @login.closed?
-      @transfer.upload!(src, destination, options)
+      @login.scp.upload!(src, destination, options)
     rescue Exception => e
       email_alert(e.message)
     end
