@@ -7,7 +7,7 @@ class FluxProxy
   attr_accessor :login
 
   def initialize(login_var)
-    @email_sent = false
+    @email_sent = Time.now-3600
     @login = login_var
     @logger = Logger.new('output.log', 5, 102400000)
     p2 = Thread.new do
@@ -57,12 +57,12 @@ class FluxProxy
 
   def email_alert(message)
     begin
-      @logger.debug { "Email already sent: #{@email_sent}"}
+      @logger.debug { "Email last sent: #{@email_sent}"}
       @logger.error { "Asked to send email alert." }
-      if @email_sent
+      if Time.now - @email_sent < 3600
         "failure, email already sent."
       else
-        @email_sent = true
+        @email_sent = Time.now
         EMAIL_LIST.each do |email_address|
           @logger.info { "Sent email to #{email_address}"}
           email = Pony.mail({
