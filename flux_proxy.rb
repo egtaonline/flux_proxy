@@ -25,6 +25,7 @@ class FluxProxy
   def exec!(cmd)
     begin
       @logger.info { "Called with #{cmd}" }
+      @login.loop { @login.busy? }
       return email_alert("Connection closed") if @login.closed?
       @login.exec!(cmd)
     rescue Exception => e
@@ -36,6 +37,7 @@ class FluxProxy
     begin
       @logger.info { "Asked to download #{src} to #{destination} with #{options}" }
       return email_alert("Connection closed") if @login.closed?
+      @login.loop { @login.busy? }
       @login.scp.download!(src, destination, options)
     rescue Exception => e
       email_alert(e.message)
@@ -46,6 +48,7 @@ class FluxProxy
     begin
       @logger.info { "Asked to upload #{src} to #{destination} with #{options}" }
       return email_alert("Connection closed") if @login.closed?
+      @login.loop { @login.busy? }
       @login.scp.upload!(src, destination, options)
     rescue Exception => e
       email_alert(e.message)
