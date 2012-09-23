@@ -10,12 +10,6 @@ class FluxProxy
     @email_sent = Time.now-3600
     @login = login_var
     @logger = Logger.new('output.log', 5, 102400000)
-    p2 = Thread.new do
-      loop do
-        @logger.info { @login.exec!("date") }
-        sleep 59
-      end
-    end
   end
 
   def closed?
@@ -38,7 +32,11 @@ class FluxProxy
       @logger.info { "Asked to download #{src} to #{destination} with #{options}" }
       return email_alert("Connection closed") if @login.closed?
       @login.loop { @login.busy? }
-      @login.scp.download!(src, destination, options)
+      if @login.exec!('[ -d /var/logs ] && echo "true" || echo "false"') == "true"
+        @login.scp.download!(src, destination, options)
+      else
+        "folder does not exist"
+      end
     rescue Exception => e
       email_alert(e.message)
     end
@@ -49,7 +47,9 @@ class FluxProxy
       @logger.info { "Asked to upload #{src} to #{destination} with #{options}" }
       return email_alert("Connection closed") if @login.closed?
       @login.loop { @login.busy? }
-      @login.scp.upload!(src, destination, options)
+      output = @login.scp.upload!(src, destination, options)
+      @logger.debug { "Finished: #{output}" }
+      output
     rescue Exception => e
       email_alert(e.message)
     end
