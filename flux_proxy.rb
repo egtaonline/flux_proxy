@@ -31,7 +31,9 @@ class FluxProxy
     begin
       @logger.info { "Asked to download #{src} to #{destination} with #{options}" }
       return email_alert("Connection closed") if @login.closed?
-      if @login.exec!('[ -d /var/logs ] && echo "true" || echo "false"') == "true"
+      exists = @login.exec!('[ -d /var/logs ] && echo "true" || echo "false"')
+      @logger.info { exists }
+      if exists == "true"
         @logger.info { "Beginning download" }
         @login.scp.download!(src, destination, options)
       else
