@@ -31,8 +31,8 @@ class FluxProxy
     begin
       @logger.info { "Asked to download #{src} to #{destination} with #{options}" }
       return email_alert("Connection closed") if @login.closed?
-      @login.loop { @login.busy? }
       if @login.exec!('[ -d /var/logs ] && echo "true" || echo "false"') == "true"
+        @logger.info { "Beginning download" }
         @login.scp.download!(src, destination, options)
       else
         "folder does not exist"
@@ -46,7 +46,6 @@ class FluxProxy
     begin
       @logger.info { "Asked to upload #{src} to #{destination} with #{options}" }
       return email_alert("Connection closed") if @login.closed?
-      @login.loop { @login.busy? }
       output = @login.scp.upload!(src, destination, options)
       @logger.debug { "Finished: #{output}" }
       output
