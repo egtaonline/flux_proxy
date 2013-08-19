@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/egtaonline/net-ssh.git
+  revision: 5b3a3cc28ee1212adcd8ffea145e3a6244b2a16f
+  specs:
+    net-ssh (2.5.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -10,7 +16,6 @@ GEM
     mime-types (1.19)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
-    net-ssh (2.5.2)
     polyglot (0.3.3)
     pony (1.4)
       mail (> 2.0)
@@ -19,10 +24,11 @@ GEM
       polyglot (>= 0.3.1)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
   highline
   net-scp
-  net-ssh
+  net-ssh!
   pony

@@ -6,9 +6,8 @@ class FluxProxy
   EMAIL_LIST=['bcassell@umich.edu']
   attr_accessor :login
 
-  def initialize(login_var)
+  def initialize
     @email_sent = Time.now-3600
-    @login = login_var
     @logger = Logger.new('output.log', 5, 102400000)
   end
 
@@ -16,7 +15,24 @@ class FluxProxy
     @login.closed?
   end
 
+  def authenticated?
+    @login != nil && !@login.closed?
+  end
+
+  def authenticate(uniqname, verification_number, password)
+    @logger.info { 'Authenticating' }
+    begin
+      @login.close if @login
+      @login = Net::SSH.start('flux-login.engin.umich.edu', uniqname, :password => [verification_number, password], :auth_methods => ['securid'])
+      true
+    rescue Exception => e
+      @logger.error { e.message }
+      return false
+    end
+  end
+
   def exec!(cmd)
+    return email_alert("Connection closed") unless @login
     begin
       @logger.info { "Called with #{cmd}" }
       @login.loop { @login.busy? }
@@ -27,9 +43,11 @@ class FluxProxy
     end
   end
 
-  def download!(src, destination, options)
+  def download!(src, destination, options={})
+    return email_alert("Connection closed") unless @login
     begin
       @logger.info { "Asked to download #{src} to #{destination} with #{options}" }
+      @login.loop { @login.busy? }
       return email_alert("Connection closed") if @login.closed?
       exists = @login.exec!("[ -d #{src} ] && echo \"true\" || echo \"false\"")
       @logger.info { exists }
@@ -44,9 +62,11 @@ class FluxProxy
     end
   end
 
-  def upload!(src, destination, options)
+  def upload!(src, destination, options={})
+    return email_alert("Connection closed") unless @login
     begin
       @logger.info { "Asked to upload #{src} to #{destination} with #{options}" }
+      @login.loop { @login.busy? }
       return email_alert("Connection closed") if @login.closed?
       output = @login.scp.upload!(src, destination, options)
       @logger.debug { "Finished: #{output}" }
@@ -92,11 +112,5 @@ class FluxProxy
   end
 end
 
-uniqname = ARGV.shift
-login = Net::SSH.start('flux-login.engin.umich.edu', uniqname)
-
-p1 = fork do
-  DRb.start_service('druby://localhost:30000', FluxProxy.new(login))
-  DRb.thread.join
-end
-Process.detach(p1)
+DRb.start_service('druby://localhost:30000', FluxProxy.new)
+DRb.thread.join
