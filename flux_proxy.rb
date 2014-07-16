@@ -112,5 +112,9 @@ class FluxProxy
   end
 end
 
-DRb.start_service('druby://localhost:30000', FluxProxy.new)
-DRb.thread.join
+begin
+  DRb.start_service('druby://localhost:30000', FluxProxy.new)
+  DRb.thread.join
+rescue Exception => e
+  Logger.new('death.log', 5, 102400000).fatal { e.message }
+end
