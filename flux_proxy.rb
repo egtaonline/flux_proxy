@@ -23,7 +23,7 @@ class FluxProxy
     @logger.info { 'Authenticating' }
     begin
       @login.close if @login
-      @login = Net::SSH.start('flux-login.arc-ts.umich.edu', uniqname, :password => [verification_number, password], :auth_methods => ['securid'])
+      @login = Net::SSH.start('flux-login.arc-ts.umich.edu', uniqname, :password => [password, "1"], :auth_methods => ['securid'])
       true
     rescue Exception => e
       @logger.error { e.message }
