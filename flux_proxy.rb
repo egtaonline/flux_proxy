@@ -19,7 +19,7 @@ class FluxProxy
     @login != nil && !@login.closed?
   end
 
-  def authenticate(uniqname, verification_number, password)
+  def authenticate(uniqname, password)
     @logger.info { 'Authenticating' }
     begin
       @login.close if @login
