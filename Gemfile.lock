@@ -7,21 +7,14 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    highline (1.6.13)
-    i18n (0.6.1)
-    mail (2.4.4)
-      i18n (>= 0.4.0)
-      mime-types (~> 1.16)
-      treetop (~> 1.4.8)
-    mime-types (1.19)
+    highline (2.0.0)
+    mail (2.7.0)
+      mini_mime (>= 0.1.1)
+    mini_mime (1.0.0)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
-    polyglot (0.3.3)
-    pony (1.4)
-      mail (> 2.0)
-    treetop (1.4.10)
-      polyglot
-      polyglot (>= 0.3.1)
+    pony (1.12)
+      mail (>= 2.0)
 
 PLATFORMS
   java
@@ -32,3 +25,6 @@ DEPENDENCIES
   net-scp
   net-ssh!
   pony
+
+BUNDLED WITH
+   1.16.2

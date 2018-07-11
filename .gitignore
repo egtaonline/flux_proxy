@@ -1,1 +1,4 @@
-output.log
+/output.log
+/death.log
+/.bundle
+/vendor
